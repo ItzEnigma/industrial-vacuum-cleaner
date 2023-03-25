@@ -1,5 +1,5 @@
 # **Industrial Vacuum Cleaner**
-##### Industrial Vacuum Cleaner project based on ARM-CortexM4 processor developed in C-Language. Debugged and simulated using Keil-IDE (v5) ... the project is part of Swift Act Training (Embedded Software Design).
+#### Industrial Vacuum Cleaner project based on ARM-CortexM4 processor developed in C-Language. Debugged and simulated using Keil-IDE (v5) ... the project is part of Swift Act Training (Embedded Software Design).
 ---
 ## **Details**
 The Project presents the software development of an industrial vacuum cleaner that has 3 necessary speed states:
