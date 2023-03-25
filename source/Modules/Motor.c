@@ -6,6 +6,8 @@ static tByte gCurrent_angle = MOTOR_ANGLE_170;
 static tByte gFiring_angle = 169;
 static tMotor_State gMotor_state = SOFT_SWITCHING;
 
+volatile uint32_t currentAngle_DEBUG = 0;			/* Only used for debugging */
+
 void Motor_Init(void)
 {
 	Motor_SetAngle(MOTOR_ANGLE_90);
@@ -18,20 +20,20 @@ void Motor_SetAngle(tMotor_Angle angel)
 
 void Motor_Update(void)		/* Every 10ms (Triggered with systick) */
 {
+	currentAngle_DEBUG = gCurrent_angle;
 	static tByte soft_i = 0;
 	static tByte harm_i = 0;
 	static tMotor_harmState harm_prevState = DECREASED;
 	static tMotor_harmState harm_curState  = BALANCED;
-	TMR1_UPDATE_REGISTER(gFiring_angle);
 	switch(gMotor_state)
 	{
 		case SOFT_SWITCHING:
-			if(harm_i == 4)
+			if(soft_i == 4)
 			{
-				harm_i = 1;
-				if(gTarget_angle > gCurrent_angle)
+				soft_i = 1;
+				if(gTarget_angle > gCurrent_angle)			/* Still less than required angle */
 					gCurrent_angle ++;
-				else if(gTarget_angle < gCurrent_angle)
+				else if(gTarget_angle < gCurrent_angle)	/* Still higher than required angle */
 					gCurrent_angle --;
 				else /* gTarget_angle == gCurrent_angle */
 				{
@@ -40,8 +42,9 @@ void Motor_Update(void)		/* Every 10ms (Triggered with systick) */
 					harm_curState  = BALANCED;
 				}
 			}
-			 else harm_i++;
+			 else soft_i++;
 			break;
+			
 		case HARMONIC:
 			if(harm_i == 2)
 			{
@@ -69,6 +72,7 @@ void Motor_Update(void)		/* Every 10ms (Triggered with systick) */
 					harm_prevState = INCREASED;
 					harm_curState = BALANCED;
 				}
+				harm_i = 1;
 			}
 			else
 				harm_i++;

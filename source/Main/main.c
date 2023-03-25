@@ -1,3 +1,8 @@
+/***************************************************************************/
+/*	Project : Vaccum Cleaner																							 */
+/*	Details :	...																													 */
+/***************************************************************************/
+
 #include "../Main/main.h"
 #include "../Modules/SW.h"
 #include "../Modules/Timer.h"
@@ -7,7 +12,7 @@
 #include "../Modules/Motor.h"
 #include "stdio.h"
 
-///Oscilloscope should monitor C6 and C7 channels
+/* Oscilloscope should monitor C6 and C7 channels */
 
 int main(void)
 {
@@ -15,19 +20,19 @@ int main(void)
    
    printf("Vacuum Cleaner is starting ...\n");
    
-    SW_Init();
-    DISP_Init();
-    VC_Init();
-    Motor_Init();
+    SW_Init();		/* Switch Init */
+    DISP_Init();	/* Display Init */
+    VC_Init();		/* Vaccum Cleaner Init */
+    Motor_Init();	/* Motor Init */
 
-    //Initialize the timer and start it
+    /* Initialize the timer and start it */
     TMR_Init();
     TMR_Start();
 
     while (1)
     {
       // Sleep
-      __WFI();
+			__WFI();
     }
 
     return 0;
